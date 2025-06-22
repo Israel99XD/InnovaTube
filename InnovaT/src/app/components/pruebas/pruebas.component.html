@@ -1,0 +1,68 @@
+<div class="container p-4">
+  <input
+    type="text"
+    [(ngModel)]="termino"
+    (keyup.enter)="buscar()"
+    placeholder="Buscar videos"
+    class="p-2 border rounded w-full mb-4"
+  />
+  <button (click)="buscar()" class="mb-4 p-2 bg-blue-600 text-white rounded">Buscar</button>
+<div class="p-grid" style="height: 80vh; gap:1rem; padding: 1rem;">
+  <!-- Panel video seleccionado (izquierda) -->
+  <div class="p-col-12 p-md-6" style="display: flex; flex-direction: column; align-items: center;">
+    <h3>Video seleccionado</h3>
+    <div *ngIf="videoSeleccionado; else noSeleccionado" style="width: 100%;">
+      <h4>{{ videoSeleccionado.title }}</h4>
+      <iframe
+        width="100%"
+        height="360"
+        [src]="videoSeleccionado.url"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <ng-template #noSeleccionado>
+      <p>Selecciona un video para reproducir</p>
+    </ng-template>
+  </div>
+
+  <!-- Panel lista de videos (derecha) -->
+  <div class="p-col-12 p-md-6" style="overflow-y: auto; max-height: 80vh;">
+    <input
+      type="text"
+      [(ngModel)]="termino"
+      (keyup.enter)="buscar()"
+      placeholder="Buscar videos"
+      class="p-inputtext p-component p-filled mb-3"
+      style="width: 100%; padding: .5rem;"
+    />
+    <button
+      (click)="buscar()"
+      pButton
+      label="Buscar"
+      icon="pi pi-search"
+      class="mb-3"
+      style="width: 100%;"
+    ></button>
+
+    <div class="p-grid" style="gap: 1rem;">
+      <div
+        *ngFor="let video of videos"
+        class="p-col-12 p-sm-6 p-lg-4"
+        style="cursor: pointer;"
+        (click)="seleccionarVideo(video)"
+      >
+        <p-card [header]="video.title">
+          <iframe
+            width="100%"
+            height="180"
+            [src]="video.url"
+            frameborder="0"
+            allowfullscreen
+            style="pointer-events: none;"
+          ></iframe>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>
