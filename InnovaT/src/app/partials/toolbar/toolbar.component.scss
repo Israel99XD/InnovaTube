@@ -1,0 +1,18 @@
+.logoInn{
+    width: 50px;
+}
+
+/* Por defecto (escritorio), alineación normal */
+.toolbar-start-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* espacio entre botones */
+}
+
+/* En pantallas pequeñas (responsive), centrar los botones */
+@media (max-width: 768px) {
+  .toolbar-start-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+}

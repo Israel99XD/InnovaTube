@@ -23,6 +23,7 @@ export class PruebasComponent implements OnInit {
     this.cargarVideosPopulares();
   }
 
+  
   cargarVideosPopulares() {
     this.yt.getVideosPopulares(12).subscribe((res: any) => {
       if (!res.items || res.items.length === 0) {
@@ -44,28 +45,34 @@ export class PruebasComponent implements OnInit {
     });
   }
 
-  buscar() {
-    if (this.termino.trim() === '') return;
+  
+buscar() {
+  console.log('Buscar ejecutado con término:', this.termino); // ← Asegúrate de ver esto
 
-    this.yt.getVideosPorBusqueda(this.termino, 12).subscribe((res: any) => {
-      if (!res.items || res.items.length === 0) {
-        this.videos = [];
-        this.videoSeleccionado = null;
-        return;
-      }
+  if (this.termino.trim() === '') return;
 
-      this.videos = res.items.map((item: any) => {
-        const videoId = item.id.videoId;
-        const title = item.snippet.title;
-        const url = this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://www.youtube.com/embed/${videoId}`
-        );
-        return { title, url };
-      });
+  this.yt.getVideosPorBusqueda(this.termino, 12).subscribe((res: any) => {
+    console.log('Respuesta de búsqueda:', res); // ← Inspecciona aquí
 
-      this.seleccionarVideo(this.videos[0]);
+    if (!res.items || res.items.length === 0) {
+      this.videos = [];
+      this.videoSeleccionado = null;
+      return;
+    }
+
+    this.videos = res.items.map((item: any) => {
+      const videoId = item.id?.videoId || item.id; // por si id viene directo
+      const title = item.snippet.title;
+      const url = this.sanitizer.bypassSecurityTrustResourceUrl(
+        `https://www.youtube.com/embed/${videoId}`
+      );
+      return { title, url };
     });
-  }
+
+    this.seleccionarVideo(this.videos[0]);
+  });
+}
+
 
   seleccionarVideo(video: { title: string; url: SafeResourceUrl }) {
     this.videoSeleccionado = video;

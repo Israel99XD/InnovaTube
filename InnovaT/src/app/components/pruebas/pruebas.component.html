@@ -1,22 +1,25 @@
+<div class="px-4 py-4 w-full">
 
-<div class="container p-4">
-  <input
-    type="text"
-    [(ngModel)]="termino"
-    (keyup.enter)="buscar()"
-    placeholder="Buscar videos"
-    class="p-2 border rounded w-full mb-4"
-  />
-  <button (click)="buscar()" class="mb-4 p-2 bg-blue-600 text-white rounded">Buscar</button>
-
-  <div *ngFor="let video of videos" class="mb-4">
-    <h3>{{ video.title }}</h3>
-    <iframe
-      width="640"
-      height="360"
-      [src]="video.url"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
+  <!-- GALERÍA DE VIDEOS EN GRID RESPONSIVE -->
+  <div
+    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+  >
+    <div
+      *ngFor="let video of videos"
+      (click)="seleccionarVideo(video)"
+      class="cursor-pointer"
+    >
+      <p-card>
+        <ng-template pTemplate="header">
+          <h3 class="text-sm truncate whitespace-nowrap">{{ video.title }}</h3>
+        </ng-template>
+        <iframe
+          class="w-full aspect-video rounded"
+          [src]="video.url"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </p-card>
+    </div>
   </div>
 </div>
