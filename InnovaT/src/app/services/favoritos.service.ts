@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class FavoritosService {
-  private baseUrl = 'https://innova-tube-weld.vercel.app/api/favoritos';
+  private baseUrl = 'https://innovatube-hq5c.onrender.com/api/favoritos';
 
   constructor(private http: HttpClient) {}
 
