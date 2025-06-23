@@ -3,27 +3,32 @@ import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+import { authGuard } from './guards/auth.guard';
+import { noAuthGuard } from './guards/no-aut.guard';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'Home',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
         path: 'Home',
-        component: HomeComponent
+        component: HomeComponent,
     },
     {
         path: 'pruebas',
-        component: PruebasComponent
+        component: PruebasComponent,
+        canActivate:[authGuard]
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate:[noAuthGuard]
     },
     {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
+        canActivate:[noAuthGuard]
     }
 ];
