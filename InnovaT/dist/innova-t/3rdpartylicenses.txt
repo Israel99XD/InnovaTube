@@ -238,6 +238,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
+Package: ngx-captcha
+License: "MIT"
+
+
+--------------------------------------------------------------------------------
 Package: @primeng/themes
 License: "SEE LICENSE IN LICENSE.md"
 

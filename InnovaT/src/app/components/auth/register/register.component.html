@@ -79,10 +79,16 @@
       </div>
 
       <p-divider></p-divider>
-      <ngx-recaptcha2 [siteKey]="'6Lc6T2srAAAAAB2oOpVTqirE5kJxPb6IV1h1FP5e'" [useGlobalDomain]="false"
-        formControlName="recaptcha"></ngx-recaptcha2>
+      <!-- ...dentro del form justo donde está el recaptcha -->
+      <div class="flex justify-center my-4">
+        <ngx-recaptcha2 [siteKey]="'6Lc6T2srAAAAAB2oOpVTqirE5kJxPb6IV1h1FP5e'" [useGlobalDomain]="false"
+          formControlName="recaptcha"></ngx-recaptcha2>
+      </div>
       <p-message *ngIf="submitted && f['recaptcha'].errors?.['required']" severity="error" variant="simple"
-        size="small"> El Recaptcha requerido.</p-message>
+        size="small">
+        El Recaptcha requerido.
+      </p-message>
+
       <div class="flex justify-center mt-3">
         <button pButton type="submit" label="Registrarse" [loading]="loading"></button>
       </div>
