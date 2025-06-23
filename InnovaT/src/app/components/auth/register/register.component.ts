@@ -68,6 +68,11 @@ export class RegisterComponent {
     });
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+
   matchPasswords(group: FormGroup) {
     const password = group.get('password')?.value;
     const confirm = group.get('confirmPassword')?.value;

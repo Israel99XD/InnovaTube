@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder,ReactiveFormsModule, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -22,7 +22,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     InputTextModule,
     PasswordModule,
     ButtonModule,
@@ -48,36 +48,41 @@ export class LoginComponent {
   submitted!: boolean;
 
   constructor(
-    private auth:AuthService, 
+    private auth: AuthService,
     private formBuilder: FormBuilder,
-    private router:Router,
+    private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService){}
-  
-    get f() { return this.loginForm.controls; }
+    private messageService: MessageService) { }
+
+  get f() { return this.loginForm.controls; }
 
   onSubmit() {
-      this.submitted = true;
-      if (this.loginForm.invalid) {
-        return;
-      }
-      this.loading = true;
-      this.auth.login(this.f['username'].value, this.f['password'].value).subscribe({
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.auth.login(this.f['username'].value, this.f['password'].value).subscribe({
       next: res => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signin Successful',life:3000 });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signin Successful', life: 3000 });
         this.auth.saveToken(res.token);
         this.router.navigate(['pruebas']);
       },
       error: err => {
-      this.loading = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.msg || 'Error en el login' , life: 3000})
+        this.loading = false;
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.msg || 'Error en el login', life: 3000 })
       }
-     });
-    }
-    ngOnInit(): void {
-      this.loginForm = this.formBuilder.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required]
-      });
-    }
+    });
+  }
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
 }
