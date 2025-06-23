@@ -1,24 +1,30 @@
 <div class="px-4 py-4 w-full">
-
+  <input type="text" [(ngModel)]="termino" (keyup.enter)="buscar()" placeholder="Buscar videos"
+    class="p-2 border rounded w-full mb-4" />
   <!-- GALERÍA DE VIDEOS EN GRID RESPONSIVE -->
-  <div
-    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-  >
-    <div
-      *ngFor="let video of videos"
-      (click)="seleccionarVideo(video)"
-      class="cursor-pointer"
-    >
+  <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <div *ngFor="let video of videos" (click)="seleccionarVideo(video)" class="cursor-pointer">
       <p-card>
         <ng-template pTemplate="header">
           <h3 class="text-sm truncate whitespace-nowrap">{{ video.title }}</h3>
         </ng-template>
-        <iframe
-          class="w-full aspect-video rounded"
-          [src]="video.url"
-          frameborder="0"
-          allowfullscreen>
+        <iframe class="w-full aspect-video rounded" [src]="video.url" frameborder="0" allowfullscreen>
         </iframe>
+        <div class="flex justify-center mt-2">
+          <button (click)="toggleFavorito(video, $event)" class="focus:outline-none"
+            [title]="video.favorito ? 'Quitar de favoritos' : 'Marcar como favorito'" aria-label="Marcar como favorito">
+            <svg [attr.fill]="video.favorito ? 'red' : 'none'" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                2 5.42 4.42 3 7.5 3
+                c1.74 0 3.41 0.81 4.5 2.09
+                C13.09 3.81 14.76 3 16.5 3
+                19.58 3 22 5.42 22 8.5
+                c0 3.78-3.4 6.86-8.55 11.54
+                L12 21.35z" />
+            </svg>
+          </button>
+        </div>
       </p-card>
     </div>
   </div>

@@ -10,12 +10,12 @@ import { CardModule } from 'primeng/card';
   standalone: true,
   imports: [CommonModule, FormsModule, CardModule],
   templateUrl: './pruebas.component.html',
-  styleUrl: './pruebas.component.scss',
+  styleUrls: ['./pruebas.component.scss'],  // corregí styleUrl -> styleUrls
 })
 export class PruebasComponent implements OnInit {
   termino: string = '';
-  videos: { title: string; url: SafeResourceUrl }[] = [];
-  videoSeleccionado: { title: string; url: SafeResourceUrl } | null = null;
+  videos: { title: string; url: SafeResourceUrl; favorito: boolean }[] = [];
+  videoSeleccionado: { title: string; url: SafeResourceUrl; favorito: boolean } | null = null;
 
   constructor(private yt: YoutubeService, private sanitizer: DomSanitizer) {}
 
@@ -23,7 +23,6 @@ export class PruebasComponent implements OnInit {
     this.cargarVideosPopulares();
   }
 
-  
   cargarVideosPopulares() {
     this.yt.getVideosPopulares(12).subscribe((res: any) => {
       if (!res.items || res.items.length === 0) {
@@ -38,43 +37,42 @@ export class PruebasComponent implements OnInit {
         const url = this.sanitizer.bypassSecurityTrustResourceUrl(
           `https://www.youtube.com/embed/${videoId}`
         );
-        return { title, url };
+        return { title, url, favorito: false };
       });
 
       this.seleccionarVideo(this.videos[0]);
     });
   }
 
-  
-buscar() {
-  console.log('Buscar ejecutado con término:', this.termino); // ← Asegúrate de ver esto
+  buscar() {
+    if (this.termino.trim() === '') return;
 
-  if (this.termino.trim() === '') return;
+    this.yt.getVideosPorBusqueda(this.termino, 12).subscribe((res: any) => {
+      if (!res.items || res.items.length === 0) {
+        this.videos = [];
+        this.videoSeleccionado = null;
+        return;
+      }
 
-  this.yt.getVideosPorBusqueda(this.termino, 12).subscribe((res: any) => {
-    console.log('Respuesta de búsqueda:', res); // ← Inspecciona aquí
+      this.videos = res.items.map((item: any) => {
+        const videoId = item.id?.videoId || item.id;
+        const title = item.snippet.title;
+        const url = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://www.youtube.com/embed/${videoId}`
+        );
+        return { title, url, favorito: false };
+      });
 
-    if (!res.items || res.items.length === 0) {
-      this.videos = [];
-      this.videoSeleccionado = null;
-      return;
-    }
-
-    this.videos = res.items.map((item: any) => {
-      const videoId = item.id?.videoId || item.id; // por si id viene directo
-      const title = item.snippet.title;
-      const url = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `https://www.youtube.com/embed/${videoId}`
-      );
-      return { title, url };
+      this.seleccionarVideo(this.videos[0]);
     });
+  }
 
-    this.seleccionarVideo(this.videos[0]);
-  });
-}
-
-
-  seleccionarVideo(video: { title: string; url: SafeResourceUrl }) {
+  seleccionarVideo(video: { title: string; url: SafeResourceUrl; favorito: boolean }) {
     this.videoSeleccionado = video;
+  }
+
+  toggleFavorito(video: { favorito: boolean }, event: MouseEvent) {
+    event.stopPropagation();
+    video.favorito = !video.favorito;
   }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class YoutubeService {
-  private apiKey = 'AIzaSyBm7Nd_mAhj52KJT9EY5l3_Owq-V-aYdw4';
+  private apiKey = 'AIzaSyBm7Nd_mAhj52KJT9EY5l3_Owq-V-aYdw4'; //AIzaSyBA2eAPOGlhV4rgXYynZCb90JYBvUVFIGQ
   private apiUrl = 'https://www.googleapis.com/youtube/v3/search';
 
   constructor(private http: HttpClient) {}
