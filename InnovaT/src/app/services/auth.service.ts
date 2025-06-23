@@ -38,8 +38,13 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
+        if (localStorage.getItem('token')) {
+            localStorage.removeItem('token');
+        }
+        if (localStorage.getItem('usuario')) {
+            localStorage.removeItem('usuario');
+        }
+        this.loggedIn.next(false);
     }
 
     getUsuario(): any {
@@ -51,7 +56,4 @@ export class AuthService {
         const usuario = this.getUsuario();
         return usuario ? usuario.sUsername : '';
     }
-
-
-
 }
