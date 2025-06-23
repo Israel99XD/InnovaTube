@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./src/configs/db');
 const authRoutes = require('./src/routes/authRoutes');
+const favoritosRoutes = require ('./src/routes/favoritosRoutes');
 const protectedRoutes = require('./src/routes/protectedRoutes');
 const cors = require('cors');
 
@@ -23,6 +24,7 @@ app.use(cors({
 // Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/protected', protectedRoutes);
+app.use('/api/favoritos', favoritosRoutes);
 
 // Arranque
 app.listen(port, () => {

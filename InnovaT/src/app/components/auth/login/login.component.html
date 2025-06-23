@@ -1,23 +1,27 @@
-<!-- Fondo centrado vertical y horizontal -->
-<div class="flex justify-center align-items-center justify-content-center  p-grid ">
-    <!-- Tarjeta con ancho fijo -->
-    <p-card styleClass="w-full md:!w-[30rem] shadow-5" severity="contrast" class="mt-40">
+<!-- Contenedor centrado -->
+<div class="flex justify-center items-center min-h-screen px-4">
+    <!-- Tarjeta -->
+    <p-card styleClass="w-full md:w-[30rem] shadow-5 mt-10">
         <ng-template #header>
             <div class="flex justify-center">
-                <img alt="Card" class="md:!w-[10rem]" src="InnovaTube.png" />
+                <img alt="Logo" src="InnovaTube.png" class="w-[6rem] md:w-[10rem]" />
             </div>
         </ng-template>
+
         <ng-template #title>
-            <h2 class="text-center m-0">Bienvenido a InnovaTube</h2>
+            <h2 class="text-center m-0 text-xl md:text-2xl">
+                Bienvenido a InnovaTube
+            </h2>
         </ng-template>
+
         <ng-template #subtitle>
             <p class="text-center text-sm m-0">Inicia sesión para continuar</p>
         </ng-template>
-        <!-- Formulario -->
-        <form [formGroup]="loginForm" id="loginForm" (ngSubmit)="onSubmit()" class="p-fluid">
 
-            <!-- Campo Username -->
-            <div class="mb-5 mt-5">
+        <!-- Formulario -->
+        <form [formGroup]="loginForm" id="loginForm" (ngSubmit)="onSubmit()" class="p-fluid mt-4">
+            <!-- Username -->
+            <div class="mb-5">
                 <p-inputgroup>
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
@@ -28,12 +32,14 @@
                     </p-floatlabel>
                 </p-inputgroup>
                 <p-message severity="error" variant="simple" size="small"
-                    *ngIf="submitted && f['username'].errors?.['required']">Username is required.</p-message>
+                    *ngIf="submitted && f['username'].errors?.['required']">
+                    Username es requerido.
+                </p-message>
             </div>
 
-            <!-- Campo Password -->
-            <div class="mb-5 mt-5">
-                <p-inputgroup class="mt-5">
+            <!-- Password -->
+            <div class="mb-5">
+                <p-inputgroup>
                     <p-inputgroup-addon>
                         <i class="pi pi-key"></i>
                     </p-inputgroup-addon>
@@ -43,22 +49,24 @@
                     </p-floatlabel>
                 </p-inputgroup>
                 <p-message severity="error" variant="simple" size="small"
-                    *ngIf="submitted && f['password'].errors?.['required']">Password is required.</p-message>
+                    *ngIf="submitted && f['password'].errors?.['required']">
+                    Password es requerido.
+                </p-message>
             </div>
+
             <div class="text-center mt-3 text-sm">
                 <span class="font-medium text-gray-700 mr-1">¿No tienes cuenta?</span>
-                <a href="/register" class="text-primary font-semibold hover:underline">Registrate</a>
+                <a href="/register" class="text-primary font-semibold hover:underline">Regístrate</a>
             </div>
 
             <p-divider></p-divider>
 
             <!-- Botón -->
-            <div class="flex justify-content-center mt-3">
+            <div class="flex justify-center mt-3">
                 <button pButton type="submit" form="loginForm" label="Ingresar" [loading]="loading"></button>
             </div>
         </form>
     </p-card>
 </div>
 
-<!-- Toast para mensajes -->
 <p-toast></p-toast>

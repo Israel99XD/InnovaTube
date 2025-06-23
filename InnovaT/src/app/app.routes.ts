@@ -3,6 +3,7 @@ import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+import { FavoritosComponent } from './components/favoritos/favoritos.component';
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-aut.guard';
 
@@ -19,6 +20,11 @@ export const routes: Routes = [
     {
         path: 'pruebas',
         component: PruebasComponent,
+        canActivate:[authGuard]
+    },
+    {
+        path: 'favoritos',
+        component: FavoritosComponent,
         canActivate:[authGuard]
     },
     {

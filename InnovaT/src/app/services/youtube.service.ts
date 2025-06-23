@@ -8,17 +8,23 @@ export class YoutubeService {
 
   constructor(private http: HttpClient) {}
 
-  getVideosPorBusqueda(termino: string, maxResults: number = 6) {
-    const params = new HttpParams()
-      .set('part', 'snippet')
-      .set('q', termino)
-      .set('type', 'video')
-      .set('key', this.apiKey)
-      .set('maxResults', maxResults)
-      .set('regionCode', 'MX');
+getVideosPorBusqueda(termino: string, maxResults: number = 6, pageToken: string = '') {
+  let params = new HttpParams()
+    .set('part', 'snippet')
+    .set('q', termino)
+    .set('type', 'video')
+    .set('key', this.apiKey)
+    .set('maxResults', maxResults)
+    .set('regionCode', 'MX');
 
-    return this.http.get(this.apiUrl, { params });
+  if (pageToken && pageToken.trim() !== '') {
+    params = params.set('pageToken', pageToken);
   }
+
+  return this.http.get(this.apiUrl, { params });
+}
+
+
 
   getVideosPopulares(maxResults: number = 6) {
   const params = new HttpParams()

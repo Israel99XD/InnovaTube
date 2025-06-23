@@ -1,17 +1,26 @@
 <div class="card">
     <p-toolbar>
         <ng-template #start>
-
+            
+            <ng-container *ngIf="!esMovil">
+                <button pButton type="button" icon="pi pi-heart" class="p-button-rounded p-button-danger mr-2"
+                    (click)="mostrarFavoritos()" label="Favoritos"></button>
+                <button pButton type="button" icon="pi pi-video" class="p-button-rounded p-button-primary mr-2"
+                    (click)="irATodos()" label="Todos"></button>
+            </ng-container>
         </ng-template>
 
         <ng-template #center>
             <p-iconfield iconPosition="left">
-                <p-inputicon styleClass="pi pi-search" />
-                <input type="text" pInputText placeholder="Search" />
+                <p-inputicon styleClass="pi pi-search"></p-inputicon>
+                <input type="text" pInputText placeholder="Buscar videos" [(ngModel)]="termino"
+                    (keydown.enter)="buscar()" />
+                <button pButton label="Buscar" (click)="buscar()"></button>
             </p-iconfield>
         </ng-template>
+
         <ng-template #end>
-            <p-splitbutton icon="pi pi-user" [model]="items" />
+            <p-splitbutton icon="pi pi-user" [model]="items"></p-splitbutton>
         </ng-template>
     </p-toolbar>
 </div>
