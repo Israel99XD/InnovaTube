@@ -21,7 +21,10 @@ import { CommonModule } from '@angular/common';
     styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent implements OnInit {
+
     items: MenuItem[] = [];
+    username: string = '';
+
     @Output() favoritosClick = new EventEmitter<void>();
     termino: string = '';
     esMovil: boolean = false;
@@ -37,6 +40,8 @@ export class ToolbarComponent implements OnInit {
         window.addEventListener('resize', this.verificarResolucion.bind(this));
 
         this.actualizarMenuItems();
+
+        this.username = this.authService.getUsername();
     }
 
     verificarResolucion() {

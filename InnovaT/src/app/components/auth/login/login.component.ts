@@ -66,6 +66,7 @@ export class LoginComponent {
       next: res => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signin Successful', life: 3000 });
         this.auth.saveToken(res.token);
+        localStorage.setItem('usuario', JSON.stringify(res.usuario));
         this.router.navigate(['pruebas']);
       },
       error: err => {

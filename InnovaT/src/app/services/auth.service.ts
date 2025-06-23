@@ -39,6 +39,19 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('token');
-        this.loggedIn.next(false);
+        localStorage.removeItem('usuario');
     }
+
+    getUsuario(): any {
+        const usuario = localStorage.getItem('usuario');
+        return usuario ? JSON.parse(usuario) : null;
+    }
+
+    getUsername(): string {
+        const usuario = this.getUsuario();
+        return usuario ? usuario.sUsername : '';
+    }
+
+
+
 }
