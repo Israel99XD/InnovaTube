@@ -15,6 +15,7 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     DividerModule,
     FloatLabelModule,
     InputGroupModule,
-    InputGroupAddonModule
+    InputGroupAddonModule,
+    NgxCaptchaModule
   ],
   providers: [MessageService],
   templateUrl: './register.component.html',
@@ -62,7 +64,8 @@ export class RegisterComponent {
       correo: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      recaptcha: ['', Validators.required]
     }, {
       validators: this.matchPasswords // ← validación personalizada
     });
@@ -83,6 +86,7 @@ export class RegisterComponent {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
+      
       return;
     }
 
