@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:3000/api/auth';
+const API_URL = 'https://innova-tube-weld.vercel.app/api/auth';
 
 @Injectable({
     providedIn: 'root'
