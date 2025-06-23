@@ -41,4 +41,45 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register};
+// Login
+const login = async (req, res) => {
+  const { sIdentificador, sPasword } = req.body;
+
+  try {
+    const usuario = await User.findOne({
+      $or: [
+        { sCorreo: sIdentificador },
+        { sUsername: sIdentificador }
+      ]
+    });
+    if (!usuario) {
+      return res.status(400).json({ msg: 'Credenciales inválidas' });
+    }
+
+    const passwordValido = await bcrypt.compare(sPasword, usuario.sPasword);
+    if (!passwordValido) {
+      return res.status(400).json({ msg: 'Credenciales inválidas' });
+    }
+
+    const token = jwt.sign(
+      { id: usuario._id, username: usuario.sUsername },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
+
+    res.json({
+      token, usuario: {
+        id: usuario._id,
+        sNombre: usuario.sNombre,
+        sApellidoPaterno: usuario.sApellidoPaterno,
+        sCorreo: usuario.sCorreo,
+        sUsername: usuario.sUsername
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error del servidor' });
+  }
+};
+
+module.exports = { register, login };

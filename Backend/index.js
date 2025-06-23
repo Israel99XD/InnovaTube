@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./src/configs/db');
 const authRoutes = require('./src/routes/authRoutes');
+const protectedRoutes = require('./src/routes/protectedRoutes');
 const cors = require('cors');
 
 dotenv.config();
@@ -21,6 +22,8 @@ app.use(cors({
 
 // Rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/protected', protectedRoutes);
+
 // Arranque
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
