@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Cors
 app.use(cors({
-  origin: 'http://localhost:4200' // o '*' para permitir todo (no recomendable en producción)
+  origin: '*' // o '*' para permitir todo (no recomendable en producción)
 }));
 
 // Rutas
