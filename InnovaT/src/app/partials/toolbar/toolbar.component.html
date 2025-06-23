@@ -1,0 +1,38 @@
+<div class="card">
+    <p-toolbar [style]="{ 'border-radius': '3rem', 'padding': '1rem 1rem 1rem 1.5rem' }"
+               styleClass="flex flex-wrap gap-3 justify-between items-center">
+        <!-- Sección izquierda -->
+        <ng-template #start>
+            <div class="flex items-center gap-3 flex-wrap">
+                <!-- Logo SVG -->
+                <svg width="31" height="33" viewBox="0 0 31 33" fill="none" xmlns="http://www.w3.org/2000/svg"
+                     style="width: 2rem; margin-right: 0.5rem;">
+                    <!-- ...tu SVG aquí... -->
+                </svg>
+
+                <p-button label="Files" text plain />
+                <p-button label="Edit" text plain />
+                <p-button label="View" text plain />
+            </div>
+        </ng-template>
+
+        <!-- Sección central -->
+        <ng-template #center>
+            <div class="flex justify-center w-full sm:w-auto">
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search" />
+                    <input type="text" pInputText placeholder="Search" />
+                </p-iconfield>
+            </div>
+        </ng-template>
+
+        <!-- Sección derecha -->
+        <ng-template #end>
+            <div class="flex items-center gap-3 flex-wrap">
+                <p-button label="Share" severity="contrast" size="small" />
+                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                          [style]="{ width: '32px', height: '32px' }" />
+            </div>
+        </ng-template>
+    </p-toolbar>
+</div>
