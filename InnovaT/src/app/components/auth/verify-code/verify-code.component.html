@@ -1,0 +1,19 @@
+<div class="flex justify-center items-center min-h-screen px-4">
+  <p-card styleClass="w-full md:w-[30rem] shadow-5 mt-10">
+    <ng-template #title>
+      <h2 class="text-center text-xl">Verifica tu código</h2>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid mt-6 flex flex-col items-center gap-6">
+      <div class="card flex justify-center w-full">
+        <p-inputotp formControlName="codigo" [integerOnly]="true" [length]="6"></p-inputotp>
+      </div>
+      <p-message *ngIf="submitted && form.controls['codigo'].invalid" severity="error"
+        text="Código inválido o requerido" class="w-full text-center"></p-message>
+
+      <button pButton type="submit" label="Verificar" [loading]="loading" class="w-full"></button>
+    </form>
+  </p-card>
+</div>
+
+<p-toast></p-toast>

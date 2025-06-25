@@ -3,6 +3,7 @@ import { FavoritosService } from '../../services/favoritos.service';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToolbarEventsService } from '../../services/toolbar-events.service';
 
 
 @Component({
@@ -15,18 +16,30 @@ export class FavoritosComponent implements OnInit {
   favoritos: any[] = [];
   videoSeleccionado: any = null;
 
-  constructor(private favoritosService: FavoritosService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private favoritosService: FavoritosService,
+    private sanitizer: DomSanitizer,
+    private toolbarEvents: ToolbarEventsService
+  ) { }
+  favoritosOriginales: any[] = [];
 
   ngOnInit(): void {
     this.favoritosService.obtenerFavoritos().subscribe({
       next: (data) => {
-        this.favoritos = data.map((video) => ({
+        this.favoritosOriginales = data.map((video) => ({
           ...video,
           favorito: true,
         }));
+        this.favoritos = [...this.favoritosOriginales];
       }
     });
+
+    // 👇 Escucha del evento de búsqueda desde la barra de herramientas
+    this.toolbarEvents.buscar$.subscribe((termino: string) => {
+      this.buscarEnFavoritos(termino);
+    });
   }
+
 
   cargarFavoritos() {
     this.favoritosService.obtenerFavoritos().subscribe({
@@ -42,6 +55,20 @@ export class FavoritosComponent implements OnInit {
       },
     });
   }
+
+  buscarEnFavoritos(termino: string) {
+    const terminoLimpio = termino.trim().toLowerCase();
+
+    if (!terminoLimpio) {
+      this.favoritos = [...this.favoritosOriginales];
+      return;
+    }
+
+    this.favoritos = this.favoritosOriginales.filter(video =>
+      video.title.toLowerCase().includes(terminoLimpio)
+    );
+  }
+
 
   seleccionarVideo(video: any) {
     this.videoSeleccionado = {

@@ -1,32 +1,48 @@
 <div class="card">
-    <p-toolbar>
-        <ng-template #start>
+  <p-toolbar>
+    <ng-template #start>
+      <!-- Solo escritorio -->
+      <ng-container *ngIf="!esMovil">
+        <button pButton type="button" icon="pi pi-heart" class="p-button-rounded p-button-danger mr-2"
+          (click)="mostrarFavoritos()" label="Favoritos"></button>
+        <button pButton type="button" icon="pi pi-video" class="p-button-rounded p-button-primary mr-2"
+          (click)="irATodos()" label="Todos"></button>
+      </ng-container>
+    </ng-template>
 
-            <ng-container *ngIf="!esMovil">
-                <button pButton type="button" icon="pi pi-heart" class="p-button-rounded p-button-danger mr-2"
-                    (click)="mostrarFavoritos()" label="Favoritos"></button>
-                <button pButton type="button" icon="pi pi-video" class="p-button-rounded p-button-primary mr-2"
-                    (click)="irATodos()" label="Todos"></button>
-            </ng-container>
-        </ng-template>
+    <ng-template #center>
+      <!-- Campo de búsqueda con autocompletado -->
+      <ng-container *ngIf="esMovil; else escritorioSearch">
+        <div class="flex gap-2 w-full">
+          <p-autoComplete [(ngModel)]="termino" [suggestions]="sugerencias" (completeMethod)="buscarSugerencias($event)"
+            (onSelect)="buscar()" placeholder="Buscar videos" class="w-full"></p-autoComplete>
+          <button pButton icon="pi pi-search" class="p-button-rounded" (click)="buscar()"></button>
+        </div>
+      </ng-container>
 
-        <ng-template #center>
-            <p-iconfield iconPosition="left">
-                <p-inputicon *ngIf="!esMovil" styleClass="pi pi-search"></p-inputicon>
-                <input type="text" pInputText placeholder="Buscar videos" [(ngModel)]="termino"
-                    (keydown.enter)="buscar()" />
-                <!-- Mostrar botón normal si NO es móvil -->
-                <button *ngIf="!esMovil" pButton label="Buscar" (click)="buscar()"></button>
-
-                <!-- Mostrar sólo icono si es móvil -->
-                <button *ngIf="esMovil" pButton icon="pi pi-search" class="p-button-rounded"
-                    (click)="buscar()"></button>
-            </p-iconfield>
-        </ng-template>
+      <ng-template #escritorioSearch>
+        <div class="flex gap-2">
+          <p-autoComplete [(ngModel)]="termino" [suggestions]="sugerencias" (completeMethod)="buscarSugerencias($event)"
+            (onSelect)="buscar()" placeholder="Buscar videos" class="w-20rem"></p-autoComplete>
+          <button pButton label="Buscar" (click)="buscar()"></button>
+        </div>
+      </ng-template>
+    </ng-template>
 
 
-        <ng-template #end>
-            <p-splitbutton icon="pi pi-user" label="{{username}}" [model]="items"></p-splitbutton>
-        </ng-template>
-    </p-toolbar>
+    <ng-template #end>
+      <div class="flex align-items-center gap-2">
+        <ng-container *ngIf="esMovil">
+          <button pButton type="button" icon="pi pi-heart" class="p-button-sm p-button-danger" label="Favoritos"
+            (click)="mostrarFavoritos()"></button>
+          <button pButton type="button" icon="pi pi-video" class="p-button-sm p-button-primary" label="Todos"
+            (click)="irATodos()"></button>
+        </ng-container>
+
+        <p-splitbutton icon="pi pi-user" label="{{ username }}" [model]="items"></p-splitbutton>
+      </div>
+    </ng-template>
+  </p-toolbar>
 </div>
+
+<p-confirmDialog></p-confirmDialog>

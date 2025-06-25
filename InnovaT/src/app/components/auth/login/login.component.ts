@@ -10,11 +10,13 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { RouterModule } from '@angular/router';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-login',
@@ -33,9 +35,14 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     DividerModule,
     FloatLabelModule,
     InputGroupModule,
-    InputGroupAddonModule
+    InputGroupAddonModule,
+    RouterModule,
+    ConfirmDialog
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    ConfirmationService
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -67,14 +74,17 @@ export class LoginComponent {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signin Successful', life: 3000 });
         this.auth.saveToken(res.token);
         localStorage.setItem('usuario', JSON.stringify(res.usuario));
-        this.router.navigate(['pruebas']);
+        setTimeout(() => {
+          this.router.navigate(['pruebas']);
+        }, 3000);
       },
       error: err => {
         this.loading = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.msg || 'Error en el login', life: 3000 })
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.msg || 'Error en el login', life: 3000 });
       }
     });
   }
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -85,5 +95,10 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigate(['/register']);
   }
+
+  goToForgotPassword() {
+    this.router.navigate(['/forgot-password']);
+  }
+
 
 }

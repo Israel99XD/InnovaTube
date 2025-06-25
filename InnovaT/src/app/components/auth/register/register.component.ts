@@ -67,7 +67,7 @@ export class RegisterComponent {
       confirmPassword: ['', Validators.required],
       recaptcha: ['', Validators.required]
     }, {
-      validators: this.matchPasswords // ← validación personalizada
+      validators: this.matchPasswords
     });
   }
 
@@ -86,7 +86,7 @@ export class RegisterComponent {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
-      
+
       return;
     }
 
@@ -98,18 +98,21 @@ export class RegisterComponent {
       sApellidoMaterno: this.f['apellidoMaterno'].value,
       sCorreo: this.f['correo'].value,
       sUsername: this.f['username'].value,
-      sPasword: this.f['password'].value
+      sPasword: this.f['password'].value,
+      recaptchaToken: this.f['recaptcha'].value
     };
+
 
     this.auth.register(payload).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Registro exitoso', life: 3000 });
-        this.router.navigate(['/login']);
+        setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: err => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error?.msg || 'Error al registrar', life: 3000 });
       }
     });
+
 
   }
 }

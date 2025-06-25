@@ -12,8 +12,13 @@
 
     <ng-template #subtitle>
       <p class="text-center text-sm m-0">Completa los datos para registrarte</p>
+      <p class="text-center text-sm m-0">
+        <span class="font-semibold text-yellow-500">Sugerencia:</span>
+        <span class="text-yellow-500">
+          Utilice un correo real ya que en caso de olvidar su contraseña se enviará un código de recuperación.
+        </span>
+      </p>
     </ng-template>
-
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="p-fluid mt-4">
       <div class="mb-5" *ngFor="let field of [
           { name: 'nombre', icon: 'user', label: 'Nombre' },
@@ -70,16 +75,7 @@
           Las contraseñas no coinciden.
         </p-message>
       </div>
-
-      <div class="text-center mt-3 text-sm">
-        <span class="font-medium text-gray-700 mr-1">¿Ya tienes cuenta?</span>
-        <span class="text-primary font-semibold hover:underline cursor-pointer" (click)="goToLogin()">
-          Inicia sesión
-        </span>
-      </div>
-
       <p-divider></p-divider>
-      <!-- ...dentro del form justo donde está el recaptcha -->
       <div class="flex justify-center my-4">
         <ngx-recaptcha2 [siteKey]="'6Lc6T2srAAAAAB2oOpVTqirE5kJxPb6IV1h1FP5e'" [useGlobalDomain]="false"
           formControlName="recaptcha"></ngx-recaptcha2>
@@ -89,6 +85,15 @@
         El Recaptcha requerido.
       </p-message>
 
+      <div class="text-center mt-3 text-sm">
+        <span class="font-medium text-gray-700 mr-1">¿Ya tienes cuenta?</span>
+        <span class="text-primary font-semibold hover:underline cursor-pointer" (click)="goToLogin()">
+          Inicia sesión
+        </span>
+      </div>
+
+
+
       <div class="flex justify-center mt-3">
         <button pButton type="submit" label="Registrarse" [loading]="loading"></button>
       </div>
@@ -96,4 +101,5 @@
   </p-card>
 </div>
 
-<p-toast></p-toast>
+<p-toast [style]="{ 'max-width': '90vw', 'left': '5vw', 'right': '5vw', 'box-sizing': 'border-box' }"
+  baseZIndex="10000"></p-toast>

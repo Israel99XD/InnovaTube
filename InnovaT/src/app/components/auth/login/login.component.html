@@ -55,6 +55,14 @@
             </div>
 
             <div class="text-center mt-3 text-sm">
+                <span class="font-medium text-gray-700 mr-1">¿Olvidaste tu contraseña?</span>
+                <a routerLink="/recuperar-password" class="text-primary font-semibold hover:underline cursor-pointer">
+                    Recuperar contraseña
+                </a>
+            </div>
+
+
+            <div class="text-center mt-3 text-sm">
                 <span class="font-medium text-gray-700 mr-1">¿No tienes cuenta?</span>
                 <span class="text-primary font-semibold hover:underline cursor-pointer" (click)="goToRegister()">
                     Regístrate
@@ -72,4 +80,8 @@
     </p-card>
 </div>
 
-<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<p-toast
+  [style]="{ 'max-width': '90vw', 'left': '5vw', 'right': '5vw', 'box-sizing': 'border-box' }"
+  baseZIndex="10000"
+></p-toast>

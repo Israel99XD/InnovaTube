@@ -47,6 +47,19 @@ export class AuthService {
         this.loggedIn.next(false);
     }
 
+    forgotPassword(sCorreo: string): Observable<any> {
+        return this.http.post(`${API_URL}/forgot-password`, { sCorreo });
+    }
+
+    verifyResetCode(sCorreo: string, codigo: string): Observable<any> {
+        return this.http.post(`${API_URL}/verify-code`, { sCorreo, codigo });
+    }
+
+    resetPasswordWithCode(sCorreo: string, codigo: string, nuevaPassword: string): Observable<any> {
+        return this.http.post(`${API_URL}/reset-password-code`, { sCorreo, codigo, nuevaPassword });
+    }
+
+
     getUsuario(): any {
         const usuario = localStorage.getItem('usuario');
         return usuario ? JSON.parse(usuario) : null;

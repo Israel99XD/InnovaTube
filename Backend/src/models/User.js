@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema(
     sCorreo: { type: String, required: true, unique: true },
     sUsername: { type: String, required: true, unique: true },
     sPasword: { type: String, required: true },
-
+    resetCode: String,
+    resetCodeExpires: Date,
     favoritos: [
       {
         videoId: String,
