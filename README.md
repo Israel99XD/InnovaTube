@@ -40,7 +40,8 @@ La empresa “InnovaTube” requiere crear una aplicación web que permita regis
 - Node JS
 - Express
 # DIAGRAMA DE COMPONENTES
-![{1792C87D-0DA9-4205-B1E6-D88C78B042B0}](https://github.com/user-attachments/assets/199d2c4b-ba29-4680-a847-a9ecfdf82763)
+![{336AAD9B-4DE7-4501-81FD-55A910644376}](https://github.com/user-attachments/assets/9624589b-0ffc-484b-90cf-b44b243614a5)
+
 
 # FrontEnd desplegado en Vercel
 ## https://innovat-chi.vercel.app/
